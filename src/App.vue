@@ -1,28 +1,51 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <keep-alive exclude="login">
+      <router-view></router-view>
+    </keep-alive>
+    <main-tab-bar></main-tab-bar>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import MainTabBar from "content/mainTabBar/mainTabBar";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    MainTabBar,
+  },
+  mounted() {
+    window.addEventListener("beforeunload", () => this.beforeunloadFn());
+    window.addEventListener("unload", () => this.unloadFn());
+  },
+  methods: {
+    unloadFn() {
+      this._gap_time = new Date().getTime() - this._beforeUnload_time;
+      if (this._gap_time <= 5) {
+        // localStorage.removeItem("isBinding");
+      }
+    },
+    beforeunloadFn() {
+      this._beforeUnload_time = new Date().getTime();
+    },
+  },
+  destroyed() {
+    window.removeEventListener("beforeunload", () => this.beforeunloadFn());
+    window.removeEventListener("unload", () => this.unloadFn());
+  },
+};
 </script>
 
 <style>
+@import "assets/css/base.css";
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  position: relative;
+  background: url("./assets/img/bg-logo.png");
+  background-color: var(--color-background);
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: contain;
 }
 </style>
