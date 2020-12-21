@@ -8,15 +8,11 @@ import 'mint-ui/lib/style.css'
 import less from 'less'
 
 
-Vue.use(ElementUI);
+Vue.use(ElementUI)
 Vue.use(less)
 Vue.prototype.$ELEMENT = { size: 'small', zIndex: 3000 };
 
 Vue.config.productionTip = false
-
-console.log(process.env.VUE_APP_URL);
-
-
 
 new Vue({
   render: h => h(App),

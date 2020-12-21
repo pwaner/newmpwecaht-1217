@@ -22,7 +22,9 @@ export default {
   },
   methods: {
     itemClick() {
-      this.$router.replace(this.link)
+      this.$router.push({
+        path: this.link
+      })
     }
   }
 };

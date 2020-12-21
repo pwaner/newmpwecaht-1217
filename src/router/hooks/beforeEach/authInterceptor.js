@@ -20,7 +20,6 @@ const authInterceptor = (to, from, next) => {
       })
     }
     next()
-  
 }
 
 export default authInterceptor

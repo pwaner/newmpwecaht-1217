@@ -10,12 +10,36 @@ const News = () => import('@/view/news/news')
 const Warning = () => import('@/view/warning/warning')
 const Danger = () => import('@/view/danger/danger')
 const Login = () => import('@/view/login/login')
-const MineProperty = () => {'@/view/mineProperty/mineProperty'}
+const Property = () => import('@/view/property/property')
+const Subscribe = () => import('@/view/subscribe/subscribe')
+const PropertyDetail = () => import('@/view/propertyDetail/propertyDetail')
 
 const routes = [
     {
         path: '/',
         redirect: '/home'
+    },
+    {
+        path: '/propertyDetail',
+        component: PropertyDetail,
+        name: "propertyDetail",
+        meta: {
+            title: '物业详情'
+        }
+    },
+    {
+        path: '/property',
+        component: Property,
+        meta: {
+            title: '我的物业'
+        }
+    },
+    {
+        path: '/subscribe',
+        component: Subscribe,
+        meta: {
+            title: '我的订阅'
+        }
     },
     {
         path: '/home',
@@ -55,20 +79,11 @@ const routes = [
     {
         path: '/login',
         component: Login,
-        name: 'login',
         meta: {
             title: '登录'
         }
     }
-    ,
-    {
-        path: '/mineProperty',
-        component: MineProperty,
-        name: 'mineProperty',
-        meta: {
-            title: '我的物业'
-        }
-    }
+    
 ]
 
 
@@ -79,7 +94,7 @@ const router = new VueRouter({
 
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
-    return originalPush.call(this, location).catch(err => err)
+    return originalPush.call(this, location)
 }
 hooks(router)
 export default router

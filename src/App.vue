@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <keep-alive exclude="login">
-      <router-view></router-view>
-    </keep-alive>
+    <router-view></router-view>
     <main-tab-bar></main-tab-bar>
   </div>
 </template>

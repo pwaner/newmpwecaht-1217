@@ -118,6 +118,7 @@ export default {
       post("session", jsonstr).then(res => {
         if (res.rows) {
             if (res.success === true) {
+              //console.log(res.rows[0]);
               this.$store.commit('updateUser', res.rows[0])
               //this.$store.state.userDate = res.rows[0];
               localStorage.setItem("userDate", JSON.stringify(res.rows[0]));
