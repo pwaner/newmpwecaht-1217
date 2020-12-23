@@ -11,6 +11,7 @@
           <div class="flex-1 item-adders" slot="left">注册手机</div>
           <div class="flex-1 item-adders" slot="right">{{userData.mobile}}</div>
         </noti-button>
+        <no-data :items="userData.eid || []" />
       </div>
     </scroll>
   </div>
@@ -20,6 +21,7 @@
 import Scroll from "components/common/scroll/Scroll";
 import ListTop from "@/components/content/listTop/listTop";
 import NotiButton from "components/common/notiButton/notiButton";
+import NoData from "components/common/NoData";
 
 export default {
   name: "propertyMain",
@@ -31,7 +33,8 @@ export default {
   components: {
     Scroll,
     ListTop,
-    NotiButton
+    NotiButton,
+    NoData
   },
   created() {
     this.getUserInfo();

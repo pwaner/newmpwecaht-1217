@@ -15,11 +15,20 @@ const Property = () => import('@/view/property/property')
 const Subsrcibe = () => import('@/view/subsrcibe/subsrcibe')
 const PropertyDetail = () => import('@/view/propertyDetail/propertyDetail')
 const PropertySurvey = () => import('@/view/propertySurvey/propertySurvey')
+const Scene = () => import('@/view/scene/scene')
 
 const routes = [
     {
         path: '/',
         redirect: '/home'
+    },
+    {
+        path: '/scene',
+        component: Scene,
+        name: "scene",
+        meta: {
+            title: '场景列表'
+        }
     },
     {
         path: '/propertySurvey',
@@ -39,6 +48,7 @@ const routes = [
     },
     {
         path: '/property',
+        name: "property",
         component: Property,
         meta: {
             title: '我的物业'

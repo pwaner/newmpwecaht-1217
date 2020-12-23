@@ -80,10 +80,10 @@
 import ListTop from "content/listTop/listTop";
 import Scroll from "@/components/common/scroll/Scroll";
 
-import loginService from "services/loginService";
 import validators from "@/common/validators";
 import { Toast } from "mint-ui";
-import { post } from "network/axios";
+
+import { pLogin, sendSms, codeLogin } from "network/login";
 
 export default {
   name: "login",
@@ -104,31 +104,20 @@ export default {
   methods: {
     //密码登录
     passLogin() {
-      var jsonstr = { 
-        type: "TSN001",
-        data: {
-          lastSceneId: "6076",
-          method: "auth_userpass",
-          mobile: "",
-          smsCode: "",
-          username: this.Register.userName,
-          password: this.Register.passWord,
-        },
-      };
-      post("session", jsonstr).then(res => {
+      let userName = this.Register.userName;
+      let passWord = this.Register.passWord;
+      pLogin(userName, passWord).then((res) => {
         if (res.rows) {
-            if (res.success === true) {
-              //console.log(res.rows[0]);
-              this.$store.commit('updateUser', res.rows[0])
-              //this.$store.state.userDate = res.rows[0];
-              localStorage.setItem("userDate", JSON.stringify(res.rows[0]));
-              localStorage.setItem("isBinding", "true"); //把isBinding储存到本地
-              //sessionStorage.setItem("isBinding", "true");
-              this.$router.replace({ path: "/", force: true });
-            }
+          if (res.success === true) {
+            this.$store.commit("updateUser", res.rows[0]);
+            localStorage.setItem("userDate", JSON.stringify(res.rows[0]));
+            localStorage.setItem("isBinding", "true"); //把isBinding储存到本地
+            this.$router.replace({ path: "/", force: true });
           }
-      })
+        }
+      });
     },
+
     //手机验证发送验证码
     doGetCode: function () {
       this.Register.sendcode = "";
@@ -142,7 +131,7 @@ export default {
           return;
         } else {
           this.countDown(60);
-          loginService.sendSms(this.Register.phone).then((res) => {
+          sendSms(this.Register.phone).then((res) => {
             console.log(res);
             if (res.success === true) {
               Toast("注册码已发送");
@@ -180,17 +169,14 @@ export default {
         Toast("请输入验证码");
         return;
       }
-      loginService
-        .bindUser(this.Register.phone, this.Register.sendcode)
+      codeLogin(this.Register.phone, this.Register.sendcode)
         .then((res) => {
           if (res.rows) {
             if (res.success === true) {
-              //console.info("login--用户绑定成功" + JSON.stringify(res.rows));
-              //this.$root.userDate = res.rows;
+              console.info("login--用户绑定成功" + JSON.stringify(res.rows));
               this.$store.state.userDate = res.rows;
               localStorage.setItem("userDate", JSON.stringify(res.rows));
-              localStorage.setItem("isBinding", "true"); //把isBinding储存到本地
-              //sessionStorage.setItem("isBinding", "true");
+              localStorage.setItem("isBinding", "true");
               this.$router.replace({ path: "/", force: true });
             }
           }

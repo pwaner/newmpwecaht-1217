@@ -10,6 +10,7 @@ class subsrcibeResquert {
     return cutOut('/subscribes/' + eid)
   }
   static postSubscribe(data) {
+    //console.log(post('/subscribes/available', data));
     return post('/subscribes/available', data)
   }
 }

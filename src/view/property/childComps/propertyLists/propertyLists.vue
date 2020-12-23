@@ -17,6 +17,7 @@
             @subscrible="subscrible(itemm)"
             test="订阅"
             :isShow="true"
+            v-preventReClick="3000"
           >
             <img
               src="~assets/img/property/subscribe.png"
@@ -36,7 +37,7 @@ import NotiButtonItem from "components/common/notiButton/notiButtonItem";
 import { Toast } from "mint-ui";
 
 import propertyAxios from "network/propertyList";
-import { addSubscrible } from "network/subscrible/getSubscrible";
+import { addSubscrible, getSub } from "network/subscrible/getSubscrible";
 
 export default {
   name: "propertyList",
@@ -51,6 +52,11 @@ export default {
       type: Number,
       default: 10,
     },
+  },
+  data() {
+    return {
+      isDisable: false,
+    };
   },
   components: {
     NotiButton,
@@ -102,13 +108,25 @@ export default {
     },
     //新增订阅
     subscrible(estate) {
-      addSubscrible(estate)
-      // .then(res => {
-      //   console.log(res);
-      //   this.$store.commit("updateEstates", res.rows);
-      //   Toast("订阅" + estate.name + "成功");
-      // })
-    }
+      getSub().then((res) => {
+        this.isDisable = true
+        const itemd = res.rows;
+        if (itemd.some((e) => e.ezEid == estate.ezEid)) {
+          Toast("请勿重复订阅!!");
+          return;
+        } else {
+          addSubscrible(estate)
+            .then((res) => {
+              console.log(res);
+              this.$store.commit("updateEstates", res.rows);
+              Toast("订阅" + estate.name + "成功");
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      })
+    },
     // subscrible: function (estate) {
     //   var param = [
     //     {
@@ -192,5 +210,10 @@ export default {
     width: 25px;
     height: auto;
   }
+}
+.stopClick {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.6;
 }
 </style>

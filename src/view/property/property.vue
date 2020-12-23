@@ -67,12 +67,15 @@ export default {
     //切换场景
     goScenes() {
       this.$router.push({
-        name: "mineProperty",
+        name: "scene",
       });
     }
   },
 };
 </script>
 
-<style>
+<style scoped>
+#property{
+  height: 100vh;
+}
 </style>

@@ -1,10 +1,10 @@
 <template>
 <common-tab>
   <common-tabel-item text="行政区划" value="" />
-  <common-tabel-item text="物业名称" :value="tabList.address" />
-  <common-tabel-item text="设备名称" :value="tabList.postScript" />
-  <common-tabel-item text="物业地址" :value="tabList.address + tabList.name" />
-  <common-tabel-item text="补充说明" :value="tabList.note" />
+  <common-tabel-item text="物业名称" :value="tabList.name" />
+  <common-tabel-item text="设备名称" :value="tabList.postScript" v-if="tabList.postScript" />
+  <common-tabel-item text="物业地址" :value="tabList.address" />
+  <common-tabel-item text="补充说明" :value="tabList.note" v-if="tabList.note"/>
 </common-tab>
 </template>
 
@@ -25,6 +25,9 @@ export default {
   components: {
     commonTab,
     commonTabelItem
+  },
+  created() {
+    console.log(this.tabList);
   }
 };
 </script>

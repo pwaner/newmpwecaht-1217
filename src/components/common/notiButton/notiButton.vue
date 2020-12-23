@@ -24,6 +24,7 @@ export default {
     -ms-flex-pack: justify;
     justify-content: space-between;
     padding: 10px 20px;
+    background-color: #fff;
     .left{
       font-size: 14px;
     }

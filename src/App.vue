@@ -33,6 +33,7 @@ export default {
     window.removeEventListener("unload", () => this.unloadFn());
   },
 };
+
 </script>
 
 <style>

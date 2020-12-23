@@ -25,7 +25,7 @@ import NotiButtonItem from "components/common/notiButton/notiButtonItem";
 import { Toast, MessageBox } from "mint-ui";
 
 import resquert from "network/subscrible/subscribeApi";
-import { getSubscrible } from "network/subscrible/getSubscrible";
+import { getSub } from "network/subscrible/getSubscrible";
 export default {
   name: "subsrcList",
   data() {
@@ -65,7 +65,7 @@ export default {
     },
     //  获取本地缓存下的用户id请求订阅列表
     getSubscribleList: function () {
-      getSubscrible()
+      getSub()
         .then((res) => {
           console.log(res.rows);
           this.subList = res.rows;
