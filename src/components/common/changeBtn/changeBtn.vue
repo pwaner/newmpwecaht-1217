@@ -25,7 +25,7 @@ export default {
 <style scoped lang="less">
 .clickBtn {
   padding: 5px;
-  margin: 10px auto 0;
+  margin: 15px auto 0;
   width: 6.25rem;
   border: var(--color-high) solid 1px;
   width: 90%;

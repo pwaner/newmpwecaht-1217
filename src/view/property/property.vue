@@ -24,7 +24,8 @@ import ChangeBtn from "components/common/changeBtn/changeBtn";
 import NoData from "components/common/NoData";
 import PropertyLists from './childComps/propertyLists/propertyLists'
 
-import PropertyList from "network/propertyList.js";
+import PropertyList from "network/propertyList";
+import SubList from "network/subscrible/subscribeApi";
 
 export default {
   name: "property",
@@ -36,6 +37,7 @@ export default {
       },
       pitem: [],
       pagesNum: 1,
+      subList: []
     };
   },
   components: {
@@ -49,8 +51,9 @@ export default {
     this.getpropertyList();
   },
   methods: {
+    //获取物业列表&获取订阅列表
     getpropertyList() {
-      var parmas = "page=1&start=0&limit=" + this.pagesNum;
+      let parmas = "page=1&start=0&limit=" + this.pagesNum;
       PropertyList.getList(parmas).then((res) => {
         localStorage.setItem("propertyList", JSON.stringify(res.rows));
         this.$store.commit("updatePropertyList", res.rows);
@@ -58,7 +61,10 @@ export default {
           this.pitem.push(items);
         });
       });
+      SubList.getSubscrible()
     },
+
+    //切换场景
     goScenes() {
       this.$router.push({
         name: "mineProperty",

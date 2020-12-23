@@ -1,14 +1,16 @@
 <template>
-  <table class="mailTable">
-    {{doTabs[0]}}
-    <tr v-for="(item, index) in doTabs[0]" :key="index">
-      <td class="column">{{ item.key }}</td>
-      <td>{{ item.value }}</td>
-    </tr>
-  </table>
+<common-tab>
+  <common-tabel-item text="行政区划" value="" />
+  <common-tabel-item text="物业名称" :value="tabList.address" />
+  <common-tabel-item text="设备名称" :value="tabList.postScript" />
+  <common-tabel-item text="物业地址" :value="tabList.address + tabList.name" />
+  <common-tabel-item text="补充说明" :value="tabList.note" />
+</common-tab>
 </template>
 
 <script>
+import commonTab from 'components/common/commonTabel/commonTabel'
+import commonTabelItem from 'components/common/commonTabel/commonTabelItem'
 export default {
   props: {
     tabList: {
@@ -18,30 +20,14 @@ export default {
   },
   data() {
     return {
-      doTabs: [],
     };
   },
-  mounted() {
-    this.doTab();
-  },
-  methods: {
-    doTab() {
-      let currentTabs = {};
-      for (var key in this.tabList) {
-        console.log(key, ":", this.tabList[key]);
-         currentTabs[this.tabList[key]] = key
-      }
-      console.log(currentTabs);
-      this.doTabs.push(currentTabs);
-      // this.tabList.map((value, key) => {
-      //   console.log(value, key);
-      //   currentTabs.key = value;
-      //   this.doTabs.push(currentTabs);
-      // });
-    },
-  },
+  components: {
+    commonTab,
+    commonTabelItem
+  }
 };
 </script>
 
-<style>
+<style scoped lang="less">
 </style>

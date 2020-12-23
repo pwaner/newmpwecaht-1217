@@ -24,7 +24,7 @@ export default {
 .list_top {
   width: 100%;
   border-bottom: 1px solid #d6d6d6;
-  padding: 10px 0;
+  padding: 15px 0;
   text-align: center;
   font-size: 16px;
   display: flex;
@@ -40,7 +40,7 @@ export default {
   }
   p {
     padding: 0 5px;
-    font-size: 14px;
+    font-size: 16px;
   }
 }
 </style>

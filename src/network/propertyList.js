@@ -16,9 +16,12 @@ class propertyList {
   static postSubscrible(parmas) {
     return post('/subscribes/available', parmas)
   }
-  static loadEstateInfo (parmas) {
+  static loadEstateInfo (parmas) { 
     // page=1&start=0&limit=25
     return get('/estates?' + parmas)
+  }
+  static loadEstateSurvey(filter) {
+    return get('/appEstates?' + filter)
   }
 }
 

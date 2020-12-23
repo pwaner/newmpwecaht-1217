@@ -36,6 +36,7 @@ import NotiButtonItem from "components/common/notiButton/notiButtonItem";
 import { Toast } from "mint-ui";
 
 import propertyAxios from "network/propertyList";
+import { addSubscrible } from "network/subscrible/getSubscrible";
 
 export default {
   name: "propertyList",
@@ -43,13 +44,13 @@ export default {
     items: {
       type: [Array, Object],
       default: () => {
-        return [] || {}
-      }
+        return [] || {};
+      },
     },
     pageNum: {
       type: Number,
-      default: 10
-    }
+      default: 10,
+    },
   },
   components: {
     NotiButton,
@@ -80,7 +81,7 @@ export default {
       };
       // 将当前物业信息存放到localStorage
       localStorage.setItem("estate", JSON.stringify(data));
-      this.$store.commit('updateCurrentEstate', data)
+      this.$store.commit("updateCurrentEstate", data);
       // 跳转
       this.$router.push({
         name: "propertyDetail",
@@ -88,78 +89,86 @@ export default {
     },
     getEstateList: function () {
       // 直接获取该场景下的物业列表,scene数组中的值
-      var param = 'page=1&start=0&limit=' + this.pageNum
-      propertyAxios.loadEstateInfo(param).then(res => {
-        //this.items = res.rows
-        localStorage.setItem('estates', JSON.stringify(res.rows))
-      }).catch(error => {
-        Toast(error.message)
-      })
-    },
-    subscrible: function (estate) {
-      // http://cloud.zayutech.com/api/desktop/subscribes?_dc=1569250957109
-      // {"ezEid":8132,"deviceAlarm":1,"clientId":"subscribe-13"}
-      // {"crId1":11072,"ehEid":8162,"deviceAlarm":1,"clientId":"subscribe-2"}
-      var param = [
-        {
-          property: "estateId",
-          value: estate.eid,
-          exactMatch: true,
-        },
-      ];
-      var filter = "filter=" + encodeURIComponent(JSON.stringify(param));
+      var param = "page=1&start=0&limit=" + this.pageNum;
       propertyAxios
-        .getSubscrible(filter)
+        .loadEstateInfo(param)
         .then((res) => {
-          const itemd = res.rows;
-          if (itemd === undefined || itemd[0] === undefined) {
-            return;
-          }
-          const item = itemd[0];
-          let data = {};
-          // todo hzb deviceFlag等根据item权限及弹窜选择设置
-          if (estate.crId === undefined) {
-            data = {
-              ad1: item.ad1,
-              ad2: item.ad2,
-              ad3: item.ad3,
-              ad4: item.ad4,
-              ad5: item.ad5,
-              appEstateFlag: 0,
-              deviceFlag: 1,
-              estateId: item.estateId,
-              reportFlag: 0,
-            };
-          } else {
-            data = {
-              relationId: estate.crId,
-              ad1: item.ad1,
-              ad2: item.ad2,
-              ad3: item.ad3,
-              ad4: item.ad4,
-              ad5: item.ad5,
-              appEstateFlag: 0,
-              deviceFlag: 1,
-              estateId: item.estateId,
-              reportFlag: 0,
-            };
-          }
-          propertyAxios
-            .postSubscrible(data)
-            .then((res) => {
-              console.log(res);
-              this.$store.commit('updateEstates', res.rows)
-              Toast("订阅" + estate.name + "成功");
-              this.getEstateList();
-            })
-            .catch((error) => {
-              Toast(error.message);
-            });
+          //this.items = res.rows
+          localStorage.setItem("estates", JSON.stringify(res.rows));
         })
         .catch((error) => {
           Toast(error.message);
         });
+    },
+    //新增订阅
+    subscrible(estate) {
+      addSubscrible(estate)
+      // .then(res => {
+      //   console.log(res);
+      //   this.$store.commit("updateEstates", res.rows);
+      //   Toast("订阅" + estate.name + "成功");
+      // })
     }
+    // subscrible: function (estate) {
+    //   var param = [
+    //     {
+    //       property: "estateId",
+    //       value: estate.eid,
+    //       exactMatch: true,
+    //     },
+    //   ];
+    //   var filter = "filter=" + encodeURIComponent(JSON.stringify(param));
+    //   propertyAxios
+    //     .getSubscrible(filter)
+    //     .then((res) => {
+    //       const itemd = res.rows;
+    //       if (itemd === undefined || itemd[0] === undefined) {
+    //         return;
+    //       }
+    //       const item = itemd[0];
+    //       let data = {};
+    //       // todo hzb deviceFlag等根据item权限及弹窜选择设置
+    //       if (estate.crId === undefined) {
+    //         data = {
+    //           ad1: item.ad1,
+    //           ad2: item.ad2,
+    //           ad3: item.ad3,
+    //           ad4: item.ad4,
+    //           ad5: item.ad5,
+    //           appEstateFlag: 0,
+    //           deviceFlag: 1,
+    //           estateId: item.estateId,
+    //           reportFlag: 0,
+    //         };
+    //       } else {
+    //         data = {
+    //           relationId: estate.crId,
+    //           ad1: item.ad1,
+    //           ad2: item.ad2,
+    //           ad3: item.ad3,
+    //           ad4: item.ad4,
+    //           ad5: item.ad5,
+    //           appEstateFlag: 0,
+    //           deviceFlag: 1,
+    //           estateId: item.estateId,
+    //           reportFlag: 0,
+    //         };
+    //       }
+    //       propertyAxios
+    //         .postSubscrible(data)
+    //         .then((res) => {
+    //           console.log(res);
+    //           this.$store.commit("updateEstates", res.rows);
+    //           Toast("订阅" + estate.name + "成功");
+    //         })
+    //         .catch((error) => {
+    //           Toast(error.message);
+    //         });
+    //     })
+    //     .catch((error) => {
+    //       Toast(error.message);
+    //     });
+    // },
   },
 };
 </script>
@@ -167,6 +176,7 @@ export default {
 <style scoped lang="less">
 .item-adders {
   line-height: 20px;
+  font-size: 14px;
 }
 .item-adders {
   width: 53%;

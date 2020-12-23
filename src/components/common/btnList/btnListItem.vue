@@ -68,6 +68,8 @@ export default {
   font-size: 14px;
   margin-top: 10px;
   color: #333;
+  width: 100%;
+  text-align: center;
 }
 
 </style>

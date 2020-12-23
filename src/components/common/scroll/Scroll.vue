@@ -52,6 +52,7 @@ export default {
       this.scroll.on("pullingUp", () => {
         console.log("上拉加载");
         this.$emit("pullingUp");
+        setTimeout(this.refresh, 20);
       });
     },
     refresh() {

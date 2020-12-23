@@ -19,6 +19,7 @@ const authInterceptor = (to, from, next) => {
         query: { redirect: to.path }
       })
     }
+    
     next()
 }
 

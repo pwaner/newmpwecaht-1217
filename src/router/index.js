@@ -6,18 +6,28 @@ Vue.use(VueRouter)
 
 const Home = () => import('@/view/home/home')
 const Profile = () => import('@/view/profile/profile')
+const ProfileMain = () => import('@/view/profileMain/profileMain')
 const News = () => import('@/view/news/news')
 const Warning = () => import('@/view/warning/warning')
 const Danger = () => import('@/view/danger/danger')
 const Login = () => import('@/view/login/login')
 const Property = () => import('@/view/property/property')
-const Subscribe = () => import('@/view/subscribe/subscribe')
+const Subsrcibe = () => import('@/view/subsrcibe/subsrcibe')
 const PropertyDetail = () => import('@/view/propertyDetail/propertyDetail')
+const PropertySurvey = () => import('@/view/propertySurvey/propertySurvey')
 
 const routes = [
     {
         path: '/',
         redirect: '/home'
+    },
+    {
+        path: '/propertySurvey',
+        component: PropertySurvey,
+        name: "propertySurvey",
+        meta: {
+            title: '物业报告'
+        }
     },
     {
         path: '/propertyDetail',
@@ -35,8 +45,9 @@ const routes = [
         }
     },
     {
-        path: '/subscribe',
-        component: Subscribe,
+        path: '/subsrcibe',
+        component: Subsrcibe,
+        name: 'subsrcibe',
         meta: {
             title: '我的订阅'
         }
@@ -44,6 +55,7 @@ const routes = [
     {
         path: '/home',
         component: Home,
+        name: 'home',
         meta: {
             title: '首页'
         }
@@ -51,8 +63,17 @@ const routes = [
     {
         path: '/profile',
         component: Profile,
+        name: 'profile',
         meta: {
             title: '我的'
+        }
+    },
+    {
+        path: '/profileMain',
+        component: ProfileMain,
+        name: "profileMain",
+        meta: {
+            title: '物业报告'
         }
     },
     {

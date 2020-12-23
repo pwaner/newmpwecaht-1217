@@ -14,7 +14,7 @@ export default {
 <style scoped lang="less">
 .notiButton {
   width: 90%;
-    margin: 10px auto 0;
+    margin: 15px auto 0;
     border: 1px solid var(--color-high-text);
     border-radius: 40px;
     display: -ms-flexbox;
@@ -24,5 +24,8 @@ export default {
     -ms-flex-pack: justify;
     justify-content: space-between;
     padding: 10px 20px;
+    .left{
+      font-size: 14px;
+    }
 }
 </style>
