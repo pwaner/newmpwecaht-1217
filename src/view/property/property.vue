@@ -1,6 +1,6 @@
 <template>
   <div id="property">
-    <scroll class="content" ref="scroll" :pull-up-load="true">
+    <scroll class="content" ref="scroll" :pull-up-load="true" :data="pitem">
       <div>
         <div class="info-container">
           <list-top

@@ -5,17 +5,20 @@
     <common-tabel-item text="安装地址" :value="list.address" />
     <common-tabel-item
       text="当前生命周期状态"
-      :value="num2Str(list.stateLife)"
+      :value="AchangeType(list.stateLife)"
     />
     <common-tabel-item text="报警说明" :value="list.note" />
-    <common-tabel-item text="报警状态" :value="num2Str(list.state)" />
-    <common-tabel-item text="报警类型" :value="num2Str(list.type)" />
+    <common-tabel-item text="报警状态" :value="AchangeType(list.state)" />
+    <common-tabel-item text="报警类型" :value="Aconvert2crTypes(list.type)" />
   </common-tab>
 </template>
 
 <script>
 import commonTab from "components/common/commonTabel/commonTabel";
 import commonTabelItem from "components/common/commonTabel/commonTabelItem";
+
+import { convert2crType } from "@/common/warnType/UAlarm";
+import { changeType } from "@/common/warnType/DevLife";
 export default {
   name: "warnList",
   props: {
@@ -29,6 +32,15 @@ export default {
     commonTabelItem,
   },
   methods: {
+    AchangeType(type) {
+      type = this.num2Str(type);
+      return changeType(type);
+    },
+    Aconvert2crTypes(type) {
+      // console.log(type);
+      type = this.num2Str(type);
+      return convert2crType(type);
+    },
     //时间戳转换
     getdate() {
       var now = new Date(),

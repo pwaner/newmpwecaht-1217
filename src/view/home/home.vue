@@ -21,9 +21,9 @@
 import Scroll from "@/components/common/scroll/Scroll";
 import ListTop from "@/components/content/listTop/listTop";
 
-import HomeSwiper from "./childComps/homeSwiper";
+import HomeSwiper from "./childComps/homeSwiper/homeSwiper";
 
-import MainBtnList from "@/components/content/mainBtnList/mainBtnList";
+import MainBtnList from "./childComps/mineBtnList/mineBtnList";
 
 import imgURL from "@/assets/img/banner/banner1.png";
 

@@ -56,9 +56,7 @@ export default {
               if (res !== "cancel") {
                 Toast("场景切换成功");
                 localStorage.setItem("userInfo", JSON.stringify(res.rows));
-                this.$router.push({
-                  name: "property",
-                });
+                this.$router.push(localStorage.getItem('beforeUrl'))
               }
             })
             .catch((err) => {

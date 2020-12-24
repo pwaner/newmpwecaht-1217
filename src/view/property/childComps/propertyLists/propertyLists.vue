@@ -108,7 +108,7 @@ export default {
     },
     //新增订阅
     subscrible(estate) {
-      getSub().then((res) => {
+      getSub(10).then((res) => {
         this.isDisable = true
         const itemd = res.rows;
         if (itemd.some((e) => e.ezEid == estate.ezEid)) {

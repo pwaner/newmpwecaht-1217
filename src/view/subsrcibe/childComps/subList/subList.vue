@@ -1,6 +1,6 @@
 <template>
   <div class="subsrcList">
-    <div class="item-box" v-for="(itemm, index) in subList" :key="index">
+    <div class="item-box" v-for="(itemm, index) in list" :key="index">
       <noti-button @click.native="btnClick(index)">
         <div class="flex-1 item-adders" slot="left">
           {{ itemm.location }}
@@ -25,9 +25,14 @@ import NotiButtonItem from "components/common/notiButton/notiButtonItem";
 import { Toast, MessageBox } from "mint-ui";
 
 import resquert from "network/subscrible/subscribeApi";
-import { getSub } from "network/subscrible/getSubscrible";
 export default {
   name: "subsrcList",
+  props: {
+    list: {
+      type: Array,
+      default: () => []
+    }
+  },
   data() {
     return {
       subList: [],
@@ -37,16 +42,13 @@ export default {
     NotiButton,
     NotiButtonItem,
   },
-  created() {
-    this.getSubscribleList();
-  },
   methods: {
     //TODO  点击跳转到对应的物业详情
     btnClick() {
       // console.log(e);
     },
     //取消订阅
-    delEstateInfo: function (item) {
+    delEstateInfo(item) {
       console.log(item);
       var that = this;
       MessageBox({
@@ -62,19 +64,8 @@ export default {
           });
         }
       });
-    },
-    //  获取本地缓存下的用户id请求订阅列表
-    getSubscribleList: function () {
-      getSub()
-        .then((res) => {
-          console.log(res.rows);
-          this.subList = res.rows;
-        })
-        .catch((error) => {
-          Toast(error.message);
-        });
-    },
-  },
+    }
+  }
 };
 </script>
 

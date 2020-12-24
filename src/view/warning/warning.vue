@@ -1,6 +1,11 @@
 <template>
   <div id="warning">
-    <scroll ref="scroll" :pull-up-load="true">
+    <scroll
+      ref="scroll"
+      :pull-up-load="true"
+      @pullingUp="loadMore"
+      :data="items"
+    >
       <div>
         <list-top class="clearfix" text="告警信息" :is-show-img="true">
           <img src="~assets/img/logo.png" alt="img" slot="image" />
@@ -21,8 +26,9 @@ import ChangeBtn from "components/common/changeBtn/changeBtn";
 
 import WarnList from "./childComps/warnList/warnList";
 
-import mineInfoService from "services/mineInfoService";
-import { Toast } from "mint-ui";
+import request from "network/warning";
+
+import { toQueryPair } from "@/common/common";
 
 export default {
   name: "warning",
@@ -36,35 +42,46 @@ export default {
     return {
       items: [],
       page: 1,
-start: 0,
-limit: 0
+      start: 0,
+      limit: 5,
     };
   },
   created() {
-    this.getAlamList();
+    this.getAlamList(this.limit);
   },
   methods: {
     goScenes: function () {
       // this.$router.go('/mineProperty')
       this.$router.push("/scene");
     },
-    getAlamList: function () {
-      // http://test.zayutech.com/api/desktop/devices/alarms?_dc=1569379641412&page=1&start=0&limit=20
-      var param = "page=1&start=0&limit=2";
+    //下拉加载更多
+    loadMore() {
+      this.getAlamList(this.limit);
+    },
+    getAlamList(limit) {
+      let urlData = "";
       let data = {
         page: this.page,
         start: this.start,
-        limit: this.limit
+        limit,
+      };
+      for (let i in data) {
+        urlData += toQueryPair(i, data[i]);
       }
-      console.log(data);
-      mineInfoService
-        .getAlamList(param)
+      request
+        .getwarnList(urlData)
         .then((res) => {
-          console.log(res);
-          this.items = res.rows;
+          console.log(res.rows);
+          res.rows.map((item) => {
+            this.items.push(item);
+          });
+
+          // this.limit += 5;
+          this.page++;
+          this.$refs.scroll.finishPullUp();
         })
-        .catch((error) => {
-          Toast(error.message);
+        .catch((err) => {
+          console.log(err);
         });
     },
   },

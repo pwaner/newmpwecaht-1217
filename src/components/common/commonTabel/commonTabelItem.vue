@@ -26,7 +26,7 @@ tr {
   display: flex;
   border: 1px solid #d6cfcf;
   border-bottom: none;
-  align-items: center;
+  // align-items: center;
   td {
     display: flex;
     align-items: center;

@@ -1,8 +1,8 @@
 import axios from 'axios'
+import _this from '../main'
 import { Toast } from 'mint-ui'
 // import store from '@/store'
 // import router from '@/router'
-
 
 // 环境的切换
 if (process.env.NODE_ENV === 'development') {
@@ -21,14 +21,23 @@ if (process.env.NODE_ENV === 'development') {
  * @param {String} url [请求的url地址]
  * @param {Object} params [请求时携带的参数]
  */
+
 export function get(url, params) {
   return new Promise((resolve, reject) => {
     axios.get(url, {
       params: params
     }).then(res => {
       resolve(res.data)
-    }).catch(err => {
-      reject(err.data)
+    }).catch(error => {
+      const code = error.response.status;
+      if (code === 401) {
+        Toast('登录已过期请重新登录');
+        setTimeout(() => {
+          _this.$router.push('/login')
+        }, 1000)
+
+      }
+      reject(error.data)
     })
   })
 }
@@ -70,17 +79,17 @@ export function cutOut(url, eid) {
  */
 export function put(url, params) {
   return new Promise((resolve, reject) => {
-      axios.put(url, params)
-          .then(res => {
-              resolve(res.data);
-              // Loading.service(true).close();
-              //  Message({message: '请求成功', type: 'success'});
-          })
-          .catch(err => {
-              reject(err.data)
-              // Loading.service(true).close();
-              Toast('加载失败');
-          })
+    axios.put(url, params)
+      .then(res => {
+        resolve(res.data);
+        // Loading.service(true).close();
+        //  Message({message: '请求成功', type: 'success'});
+      })
+      .catch(err => {
+        reject(err.data)
+        // Loading.service(true).close();
+        Toast('加载失败');
+      })
   });
 }
 

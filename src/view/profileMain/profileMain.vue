@@ -3,15 +3,15 @@
     <scroll ref="scroll" :pull-up-load="true">
       <div>
         <list-top class="clearfix" text="账户详情" :is-show-img="false" />
-        <noti-button v-if="userData.name">
+        <noti-button v-if="strUserData.name">
           <div class="flex-1 item-adders" slot="left">注册账号</div>
-          <div class="flex-1 item-adders" slot="right">{{userData.name}}</div>
+          <div class="flex-1 item-adders" slot="right">{{strUserData.name}}</div>
         </noti-button>
-        <noti-button v-if="userData.mobile">
+        <noti-button v-if="strUserData.mobile">
           <div class="flex-1 item-adders" slot="left">注册手机</div>
-          <div class="flex-1 item-adders" slot="right">{{userData.mobile}}</div>
+          <div class="flex-1 item-adders" slot="right">{{strUserData.mobile}}</div>
         </noti-button>
-        <no-data :items="userData.eid || []" />
+        <no-data :items="strUserData.toString().split() || []" />
       </div>
     </scroll>
   </div>
@@ -39,9 +39,14 @@ export default {
   created() {
     this.getUserInfo();
   },
+  computed: {
+    strUserData() {
+      return JSON.parse(this.userData)
+    }
+  },
   methods: {
     getUserInfo() {
-      this.userData = this.$store.state.userDate;
+      this.userData = localStorage.getItem('userDate');
       console.log(this.userData);
     },
   },

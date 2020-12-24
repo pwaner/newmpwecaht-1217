@@ -1,8 +1,9 @@
 import resquert from "./subscribeApi";
+import {toQueryPair} from "@/common/common"
 // import { Toast } from "mint-ui";
 
 //获取订阅列表
-function getSub() {
+function getSub(limit) {
   let eid;
   let vuserInfo = localStorage.getItem("userDate");
   if (vuserInfo !== undefined) {
@@ -12,6 +13,15 @@ function getSub() {
       eid = userinfo.scene.eid || userinfo[0].scene.eid;
     }
   }
+  let urlData = ''
+  let data = {
+    page: 1,
+    limit: limit
+  }
+  for(let key in data) {
+    urlData += toQueryPair(key, data[key])
+    //console.log(urlData);
+  }
   let param = [
     {
       property: "subjectId",
@@ -19,7 +29,7 @@ function getSub() {
       exactMatch: true,
     },
   ];
-  let filter = "filter=" + encodeURIComponent(JSON.stringify(param));
+  let filter = urlData + "&filter=" + encodeURIComponent(JSON.stringify(param));
   return resquert.getSubscrible(filter)
 }
 

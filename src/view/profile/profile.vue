@@ -5,7 +5,7 @@
         <div class="profile_info">
           <list-top
             class="clearfix profile_top"
-            :text="userDate.name ? userDate.name : '未绑定'"
+            :text="userDates.name ? userDates.name : '未绑定'"
             :is-show-img="true"
           >
             <img src="~assets/img/default-user.png" alt="img" slot="image" />
@@ -30,11 +30,18 @@ export default {
   name: "profile",
   data() {
     return {
-      userDate: this.$store.state.userDate,
+      userDate: localStorage.getItem('userDate'),
       dialogVisible: true,
     };
   },
-  created() {},
+  computed: {
+    userDates() {
+      return JSON.parse(this.userDate)
+    }
+  },
+  created() {
+    // console.log(this.userDate);
+  },
   methods: {
     loginOut() {
       MessageBox({
@@ -46,7 +53,7 @@ export default {
           console.log(res);
           localStorage.clear();
           localStorage.setItem("isBinding", false);
-          this.$router.push("/");
+          this.$router.push("/login");
         }
       });
     },

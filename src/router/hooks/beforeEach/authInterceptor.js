@@ -19,7 +19,7 @@ const authInterceptor = (to, from, next) => {
         query: { redirect: to.path }
       })
     }
-    
+    localStorage.setItem("beforeUrl", from.path)
     next()
 }
 

@@ -10,7 +10,8 @@
         <img src="~assets/img/home/giveAnAlarm.png" alt="" slot="icon" />
         <div slot="text">告警信息</div>
       </btn-list-item>
-      <btn-list-item link="/danger">
+      <!--TODO -->
+      <btn-list-item link="/danger" class="stopClick" @click="click">
         <img src="~assets/img/home/policeSituation.png" alt="" slot="icon" />
         <div slot="text">警情信息</div>
       </btn-list-item>
@@ -22,6 +23,7 @@
 import BtnList from "common/btnList/btnList";
 import BtnListItem from "common/btnList/btnListItem";
 import ListTop from "content/listTop/listTop";
+import { Toast } from "mint-ui";
 
 export default {
   data() {
@@ -30,10 +32,20 @@ export default {
   components: {
     BtnList,
     BtnListItem,
-    ListTop
+    ListTop,
+  },
+  methods: {
+    click() {
+      Toast("敬请期待");
+    },
   },
 };
 </script>
 
 <style scoped>
+.stopClick {
+  pointer-events: none;
+  cursor: default;
+  opacity: 1;
+}
 </style>

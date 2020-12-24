@@ -8,6 +8,8 @@ import 'mint-ui/lib/style.css'
 import less from 'less'
 
 
+
+
 Vue.use(ElementUI)
 Vue.use(less)
 Vue.prototype.$ELEMENT = { size: 'small', zIndex: 3000 };
@@ -27,9 +29,11 @@ Vue.directive('preventReClick', {
   }
 })
 
-new Vue({
+let vm = new Vue({
   render: h => h(App),
   store,
   router
 }).$mount('#app')
 
+
+export default vm

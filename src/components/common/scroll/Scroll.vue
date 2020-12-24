@@ -46,13 +46,13 @@ export default {
       // 2.将监听事件回调
       this.scroll.on("scroll", (pos) => {
         this.$emit("scroll", pos);
+        
       });
 
       // 3.监听上拉到底部
       this.scroll.on("pullingUp", () => {
-        console.log("上拉加载");
+        // console.log("上拉加载");
         this.$emit("pullingUp");
-        setTimeout(this.refresh, 20);
       });
     },
     refresh() {
