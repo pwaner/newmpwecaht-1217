@@ -10,7 +10,7 @@
       <img slot="active-icon" src="~assets/img/tabbar/profile.png" alt="" />
       <div slot="text">我的</div>
     </tab-bar-item>
-    <tab-bar-item link="/login">
+    <tab-bar-item link="/login" class="stopClick">
       <img slot="icon" src="~assets/img/tabbar/more.png" alt="" />
       <img slot="active-icon" src="~assets/img/tabbar/more.png" alt="" />
       <div slot="text">更多</div>
@@ -28,9 +28,13 @@ export default {
     TabBar,
     TabBarItem,
   },
-  
 };
 </script>
 
 <style scoped>
+.stopClick {
+  pointer-events: none;
+  cursor: default;
+  opacity: 1;
+}
 </style>

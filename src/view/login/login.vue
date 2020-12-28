@@ -84,6 +84,7 @@ import validators from "@/common/validators";
 import { Toast } from "mint-ui";
 
 import { pLogin, sendSms, codeLogin } from "network/login";
+import { setCookie } from "@/common/common"
 
 export default {
   name: "login",
@@ -111,7 +112,8 @@ export default {
           if (res.success === true) {
             this.$store.commit("updateUser", res.rows[0]);
             localStorage.setItem("userDate", JSON.stringify(res.rows[0]));
-            localStorage.setItem("isBinding", "true"); //把isBinding储存到本地
+            // localStorage.setItem("isBinding", "true");
+            setCookie("isBinding", "true")
             this.$router.replace({ path: "/", force: true });
           }
         }
@@ -176,7 +178,8 @@ export default {
               console.info("login--用户绑定成功" + JSON.stringify(res.rows));
               this.$store.state.userDate = res.rows;
               localStorage.setItem("userDate", JSON.stringify(res.rows));
-              localStorage.setItem("isBinding", "true");
+              // localStorage.setItem("isBinding", "true");
+              setCookie("isBinding", "true")
               this.$router.replace({ path: "/", force: true });
             }
           }

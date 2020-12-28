@@ -1,4 +1,5 @@
 import ENV from '../services/xhr/config';
+import {getCookie} from "@/common/common"
 // import loginService from '../SERVICES/loginService'
 
 export default {
@@ -41,7 +42,8 @@ export default {
     return fmt;
   },
   isLogin: function() {
-    const isBinding = localStorage.getItem('isBinding');
+    // const isBinding = localStorage.getItem('isBinding');
+    const isBinding = getCookie('isBinding');
     console.info('isBinding=' + isBinding);
     // 暂未实现退出
     // const isOut = localStorage.getItem('isOut')
